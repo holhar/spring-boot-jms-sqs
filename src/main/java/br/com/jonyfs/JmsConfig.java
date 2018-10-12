@@ -9,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import javax.annotation.PostConstruct;
 import javax.jms.Session;
-import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +24,11 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 import org.springframework.jms.support.destination.DynamicDestinationResolver;
 
-@Slf4j
 @Configuration
 @EnableJms
 public class JmsConfig {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JmsConfig.class);
 
     @PostConstruct
     public void init() {

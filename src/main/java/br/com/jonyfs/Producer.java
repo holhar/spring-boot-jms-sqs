@@ -9,15 +9,18 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.jms.JMSException;
 import javax.jms.Session;
-import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class Producer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Producer.class);
 
     @Resource
     protected JmsTemplate jmsTemplate;
@@ -63,7 +66,7 @@ public class Producer {
 
     @PostConstruct
     public void sendMessages() {
-        MyMessage a = MyMessage.builder().id(UUID.randomUUID().toString()).content("HELLO QUEUE A!").date(new Date()).build();
+        MyMessage a = new MyMessage(UUID.randomUUID().toString(), "HELLO QUEUE A!", new Date());
         sendToQueueA(a);
         sendToQueueB("HELLO QUEUE B!");
     }
